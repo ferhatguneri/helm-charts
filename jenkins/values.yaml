@@ -1,0 +1,49 @@
+persistence:
+  existingClaim: jenkins-prod
+
+master:
+  additionalPlugins:
+  - active-directory
+  - matrix-auth
+  - remote-file
+  - authorize-project
+  - blueocean
+  - kubernetes-cli
+  adminPassword: "12345"
+  ingress:
+    enabled: true
+    hostName: jenkins.ferhatguneri.com
+    path: /
+  JCasC:
+    configScripts:
+      activeadirectory: |
+        jenkins:
+          securityRealm:
+            activeDirectory:
+              customDomain: true
+              domains:
+              - bindName: "CN=username,CN=Users,DC=ferhatguneri,DC=com"
+                bindPassword: "password"
+                name: "ferhatguneri.com"
+                servers: "active-directory-ip:3268"
+                tlsConfiguration: TRUST_ALL_CERTIFICATES
+              groupLookupStrategy: AUTO
+              removeIrrelevantGroups: false
+              startTls: true
+      authorization: |
+        jenkins:
+          authorizationStrategy:
+            projectMatrix:
+              permissions:
+              - "Job/Build:authenticated"
+              - "Job/Cancel:authenticated"
+              - "Overall/Administer:AD_GroupName"
+              - "Overall/Read:authenticated"
+      approvescripts: |
+        security:
+          scriptApproval:
+            approvedSignatures:
+            - "method java.net.HttpURLConnection getResponseCode"
+            - "method java.net.URL openConnection"
+            - "method java.net.URLConnection getInputStream"
+            - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getText java.io.InputStream"

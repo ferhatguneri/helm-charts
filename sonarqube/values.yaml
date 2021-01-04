@@ -1,0 +1,17 @@
+sonarProperties:
+  sonar.security.realm: LDAP
+  ldap.url: ldap://AD-IP-ADDRESS:389
+  ldap.bindDn: CN=username,CN=Users,DC=ferhatguneri,DC=com
+  ldap.bindPassword: password
+  ldap.realm: ferhatguneri.com
+  ldap.user.baseDn: ou=OU_Name,dc=ferhatguneri,dc=com
+  ldap.user.request: (&(objectClass=user)(sAMAccountName={login})(|(memberOf=CN=CN_Name,OU=OU_Name,OU=OU_Name,DC=ferhatguneri,DC=com)(memberOf=CN=CN_Name,OU=OU,-NAME,OU=OUName,DC=ferhatguneri,DC=com)))
+  ldap.group.baseDn: ou=OU_Name,dc=ferhatguneri,dc=com
+  ldap.group.request: (&(objectClass=group)(member={dn}))
+  ldap.group.idAttribute: sAMAccountName
+
+ingress:
+  enabled: true
+  hosts:
+  - name: sonarqube.ferhatguneri.com
+    path: "/" 
