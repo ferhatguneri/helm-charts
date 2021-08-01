@@ -1,0 +1,18 @@
+Helm
+
+helm install rabbitmq --version 1.44.1 \
+  --set rabbitmqUsername=admin,rabbitmqPassword=passwordo,ingress:enabled=true,ingress:hostname=rabbitmq.host.com,rabbitmqMemoryHighWatermark=4096MB,persistentVolume:enabled=true,persistentVolume:size=1Gi \
+    stable/rabbitmq-ha --namespace services
+    
+Rancher
+
+---
+  persistentVolume: 
+    enabled: "true"
+    size: "1Gi"
+  rabbitmqUsername: "admin"
+  rabbitmqPassword: "passwordo"
+  ingress: 
+    enabled: "true"
+    hostName: "rabbitmq.host.com"
+  rabbitmqMemoryHighWatermark: "4096MB"
