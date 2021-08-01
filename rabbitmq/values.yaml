@@ -1,5 +1,8 @@
+# Reference: https://github.com/helm/charts/blob/master/stable/rabbitmq-ha/values.yaml
+
+# Installation via Helm
 # helm repo add stable https://charts.helm.sh/stable
-# helm install --name rabbitmq -f values.yaml stable/rabbitmq-ha -n services
+# helm install rabbitmq -f values.yaml stable/rabbitmq-ha -n services
 
 replicaCount: 3
 
