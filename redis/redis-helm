@@ -1,0 +1,18 @@
+Helm
+
+helm install redis --version 4.4.4\
+  --set replicas=3 \
+  --set persistentVolume:size=1Gi \
+  --set persistentVolume:reclaimPolicy=Retain \
+  --set redis:config:timeout="1000" \
+    stable/redis-ha --namespace services
+    
+Rancher
+
+---
+  replicas: "3"
+  persistentVolume:
+    enabled: false
+  redis:
+    config:
+      timeout: "1000"
