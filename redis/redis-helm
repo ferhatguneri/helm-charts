@@ -1,4 +1,8 @@
-Helm
+# References:
+
+# https://github.com/bitnami/charts/tree/master/bitnami/redis
+
+# =============== Deprecated Redis =============== #
 
 helm install redis --version 4.4.4\
   --set replicas=3 \
@@ -16,3 +20,13 @@ Rancher
   redis:
     config:
       timeout: "1000"
+
+
+
+# =============== Bitnami Redis =============== #
+
+helm repo add bitnami https://charts.bitnami.com/bitnami
+
+helm install redis \
+  --set usePassword=true,auth.password=passwordo,cluster.enabled=true,architecture=replication,replica.replicaCount=2,replica.persistence.enabled=false,master.persistence.enabled=false \
+    bitnami/redis -n backend
