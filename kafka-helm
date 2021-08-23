@@ -1,0 +1,48 @@
+
+# =============== Install Kafka =============== #
+
+helm repo add confluentinc https://confluentinc.github.io/cp-helm-charts/
+helm install kafka  \
+--set cp-kafka.persistence.enabled=false,cp-kafka.persistence.size=50Gi,cp-kafka.brokers=3,cp-zookeeper.persistence.enabled=false \
+ confluentinc/cp-helm-charts --namespace kafka
+
+
+
+# =============== Install Kafka UI =============== #
+
+helm repo add kafka-topics-ui https://dhiatn.github.io/helm-kafka-topics-ui
+helm install kafka-topics-ui  \
+--set service.type=ClusterIP,ingress.enabled=true,ingress.hosts[0]=kafka-ui.domain.com,kafkaRest.url=http://kafka-cp-kafka-rest,kafkaRest.port=8082,kafkaRest.proxy=true \
+kafka-topics-ui/kafka-topics-ui --namespace kafka
+
+
+
+
+# =============== Install Kafka Kowl UI =============== #
+
+helm repo add cloudhut https://raw.githubusercontent.com/cloudhut/charts/master/archives
+
+helm install kowl \
+--set kowl.config.kafka.brokers[0]=kafka-cp-kafka.kafka:9092 \
+  cloudhut/kowl --namespace kafka
+
+
+cat <<EOF | kubectl apply -f -
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kowl
+  namespace: kafka
+spec:
+  rules:
+  - host: "kafka-ui-kowl.domain.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: kowl
+            port:
+              number: 80
+EOF
