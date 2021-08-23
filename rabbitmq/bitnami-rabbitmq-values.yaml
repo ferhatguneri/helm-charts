@@ -1,21 +1,3 @@
-## The memory threshold under which RabbitMQ will stop reading from client network sockets, in order to avoid being killed by the OS
-## ref: https://www.rabbitmq.com/alarms.html
-## ref: https://www.rabbitmq.com/memory.html#threshold
-##
-memoryHighWatermark:
-  enabled: false
-  ## @param memoryHighWatermark.type Memory high watermark type. Either `absolute` or `relative`
-  ##
-  type: "relative"
-  ## Memory high watermark value.
-  ## @param memoryHighWatermark.value Memory high watermark value
-  ## The default value of 0.4 stands for 40% of available RAM
-  ## Note: the memory relative limit is applied to the resource.limits.memory to calculate the memory threshold
-  ## You can also use an absolute value, e.g.: 256MB
-  ##
-  value: 0.4
-
-
 
 ## @param extraSecrets Optionally specify extra secrets to be created by the chart.
 ## This can be useful when combined with load_definitions to automatically create the secret containing the definitions to be loaded.
@@ -78,30 +60,3 @@ loadDefinition:
 
 extraConfiguration: |-
   load_definitions = /app/load_definition.json
-
-resources:
-  ## Example:
-  ## limits:
-  ##    cpu: 1000m
-  ##    memory: 2Gi
-  limits: {}
-  ## Examples:
-  ## requests:
-  ##    cpu: 1000m
-  ##    memory: 2Gi
-  requests: {}
-
-persistence:
-  enabled: true
-  storageClass: ""
-  selector: {}
-  accessMode: ReadWriteOnce
-  existingClaim: ""
-  size: 8Gi
-  volumes: []
-
-ingress:
-  enabled: false
-  path: /
-  hostname: rabbitmq.local
-
