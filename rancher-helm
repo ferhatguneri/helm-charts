@@ -1,0 +1,32 @@
+## Rancher Installation
+
+helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
+helm install rancher rancher-stable/rancher \
+  --namespace cattle-system \
+  --set hostname=rancher.domain.com \
+  --set replicas=3
+
+
+## Rancher Installation with Letsencrypt
+kubectl create namespace cattle-system
+helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
+helm install rancher rancher-stable/rancher \
+  --namespace cattle-system \
+  --set hostname=rancher.domain.com \
+  --set replicas=2 \
+  --set ingress.tls.source=letsEncrypt \
+  --set letsEncrypt.email=*****@email.com \
+  --set letsEncrypt.ingress.class=nginx
+  
+  
+## Rancher Installation with Custom Certificate from Files
+kubectl create namespace cattle-system
+ kubectl -n cattle-system create secret tls tls-rancher-ingress \
+  --cert=tls.crt \
+  --key=tls.key
+ helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
+ helm install rancher rancher-stable/rancher \
+  --namespace cattle-system \
+  --set hostname=rancher.domain.com \
+  --set ingress.tls.source=tls-rancher-ingress \
+  --set privateCA=true
