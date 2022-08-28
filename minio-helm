@@ -1,3 +1,5 @@
+helm repo add minio https://charts.min.io/
+
 helm upgrade --install minio \
     --set rootUser=rootuser \
     --set rootPassword=rootpass123 \
