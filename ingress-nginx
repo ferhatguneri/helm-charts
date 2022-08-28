@@ -3,7 +3,7 @@ https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
 
-# For Cloud Kubernetes
+# Cloud Kubernetes
 helm upgrade --install \
   ingress-nginx ingress-nginx/ingress-nginx \
   --namespace ingress-nginx \
@@ -11,5 +11,15 @@ helm upgrade --install \
   --version 3.12.0 \
   --create-namespace
   
-  # On-Prem Kubernetes
-  helm install ingress-nginx ingress-nginx/ingress-nginx --create-namespace
+
+# On-Prem Kubernetes
+helm install ingress-nginx ingress-nginx/ingress-nginx --create-namespace
+
+
+##Default Certificate for Ingress-nginx. Could be letsencrypt
+
+$ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ${KEY_FILE} -out ${CERT_FILE} -subj "/CN=${HOST}/O=${HOST}"
+
+kubectl create secret tls ${CERT_NAME} --key ${KEY_FILE} --cert ${CERT_FILE}
+
+--set controller.extraArgs.default-ssl-certificate=default/${CERT_NAME}
