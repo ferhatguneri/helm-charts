@@ -1,0 +1,12 @@
+helm upgrade --install minio \
+    --set rootUser=rootuser \
+    --set rootPassword=rootpass123 \
+    --set replicas=3 \
+    --set ingress.enabled=true \
+    --set ingress.hosts={minio.domain.com} \
+    --set consoleIngress.enabled=true \
+    --set consoleIngress.hosts={console-minio.domain.com} \
+    --set resources.requests.memory=1Gi \
+    --set persistence.enabled=true \
+    --set persistence.size=10Gi \
+    minio/minio -n minio --create-namespace 
