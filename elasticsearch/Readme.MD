@@ -1,4 +1,9 @@
 ```
+# For Helm check this: https://www.elastic.co/guide/en/cloud-on-k8s/master/k8s-install-helm.html
+
+kubectl create -f https://download.elastic.co/downloads/eck/2.1.0/crds.yaml
+kubectl apply -f https://download.elastic.co/downloads/eck/2.1.0/operator.yaml
+
 kibana_url=kibana.domain.com
 namespace=services
 elastic_version=8.4.1
