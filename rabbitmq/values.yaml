@@ -58,5 +58,18 @@ loadDefinition:
   enabled: true
   existingSecret: rabbitmq-load-definition
 
+## Community plugins to download during container initialization.
+## Combine it with extraPlugins to also enable them.
+##
+communityPlugins: |
+  https://github.com/rabbitmq/rabbitmq-delayed-message-exchange/releases/download/3.11.1/rabbitmq_delayed_message_exchange-3.11.1.ez
+extraPlugins: |
+  rabbitmq_delayed_message_exchange
+
+
 extraConfiguration: |-
   load_definitions = /app/load_definition.json
+
+ingress:
+  annotations: 
+    kubernetes.io/ingress.class: nginx

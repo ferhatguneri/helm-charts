@@ -1,0 +1,10 @@
+sentinel:
+  enabled: true
+
+architecture: replication
+
+master:
+  disableCommands: []
+
+replica:
+  disableCommands: []
